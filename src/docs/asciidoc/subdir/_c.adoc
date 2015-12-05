@@ -1,0 +1,14 @@
+content from _src/docs/asciidoc/subdir/c.adoc_.
+
+
+Here's how you say ``Hello, World!'' in Prawn:
+
+.Create a basic PDF document using Prawn
+[source,ruby]
+----
+require 'prawn'
+
+Prawn::Document.generate 'example.pdf' do
+  text 'Hello, World!'
+end
+----

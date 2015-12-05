@@ -1,0 +1,186 @@
+= Example Manual
+Doc Writer <doc.writer@example.org>
+2014-09-09
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../../main/java]
+
+This is a user manual for an example project.
+
+== Introduction
+
+This project does something.
+We just haven't decided what that is yet. But we'll write a few line of code.
+
+After all its only business...
+
+This page was built by the following command:
+
+ $ ./gradlew asciidoctor
+
+
+== Diagrams
+
+You can make http://asciidoctor.org/docs/asciidoctor-diagram/[diagrams in Asciidoctor]
+
+For example, the following:
+
+.Basic ditaa block
+[source]
+----
+[ditaa, format="svg"]
+....
+                   +-------------+
+                   | Asciidoctor |-------+
+                   |   diagram   |       |
+                   +-------------+       | PNG out
+                       ^                 |
+                       | ditaa in        |
+                       |                 v
+ +--------+   +--------+----+    /---------------\
+ |        | --+ Asciidoctor +--> |               |
+ |  Text  |   +-------------+    |   Beautiful   |
+ |Document|   |   !magic!   |    |    Output     |
+ |     {d}|   |             |    |               |
+ +---+----+   +-------------+    \---------------/
+     :                                   ^
+     |          Lots of work             |
+     +-----------------------------------+
+....
+----
+
+produces
+
+.Basic ditaa block output
+[ditaa, format="png"]
+----
+                   +-------------+
+                   | Asciidoctor |-------+
+                   |  Diagram    |       |
+                   +-------------+       | PNG out
+                       ^                 |
+                       | ditaa in        |
+                       |                 v
+ +--------+   +--------+----+    /----------------\
+ |        | --+ Asciidoctor +--> |                |
+ |  Text  |   +-------------+    |Beautiful output|
+ |Document|   |   !magic!   |    |                |
+ |     {d}|   |             |    |                |
+ +---+----+   +-------------+    \----------------/
+     :                                   ^
+     |          Lots of work             |
+     +-----------------------------------+
+----
+
+== build.gradle
+
+[source,groovy]
+----
+include::{build-gradle}[]
+----
+
+[graphviz, format="svg"]
+----
+graph ethane {
+     C_0 -- H_0 [type=s];
+     C_0 -- H_1 [type=s];
+     C_0 -- H_2 [type=s];
+     C_0 -- C_1 [type=s];
+     C_1 -- H_3 [type=s];
+     C_1 -- H_4 [type=s];
+     C_1 -- H_5 [type=s];
+}
+----
+
+
+.Table [line-through]#title#
+|===
+|Header 1 |Header 2 |Header 3
+
+|Column 1, row 1
+|Column 2, row 1
+|Column 3, row 1
+
+|Column 1, row 2
+|Column 2, row 2
+|Column 3, row 2
+
+|Column 1, row 3
+|Column 2, row 3
+|Column 3, row 3
+|===
+
+
+One more Graphviz diagram:
+
+[graphviz, format="svg"]
+----
+digraph G {
+
+	subgraph cluster_0 {
+		style=filled;
+		color=lightgrey;
+		node [style=filled,color=white];
+		a0 -> a1 -> a2 -> a3;
+		label = "process #1";
+	}
+
+	subgraph cluster_1 {
+		node [style=filled];
+		b0 -> b1 -> b2 -> b3;
+		label = "process #2";
+		color=blue
+	}
+	start -> a0;
+	start -> b0;
+	a1 -> b3;
+	b2 -> a3;
+	a3 -> a0;
+	a3 -> end;
+	b3 -> end;
+
+	start [shape=Mdiamond];
+	end [shape=Msquare];
+}
+----
+
+DONE!
+
+== Source Code
+
+[source,java]
+.Java code from project
+----
+include::{sourcedir}/example/StringUtils.java[tags=contains,indent=0]
+----
+
+This page was built by the following command:
+
+ $ ./gradlew asciidoctor
+
+== Images
+
+[.thumb]
+image::sunset.jpg[scaledwidth=75%]
+
+== Attributes
+
+.Built-in
+asciidoctor-version:: {asciidoctor-version}
+safe-mode-name:: {safe-mode-name}
+docdir:: {docdir}
+docfile:: {docfile}
+imagesdir:: {imagesdir}
+
+.Custom
+project-version:: {project-version}
+sourcedir:: {sourcedir}
+endpoint-url:: {endpoint-url}
+
+== Includes
+
+.include::subdir/_b.adoc[]
+====
+include::subdir/_b.adoc[]
+====

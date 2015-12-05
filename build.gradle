@@ -1,0 +1,74 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+        classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.10.1'
+        classpath 'com.github.jruby-gradle:jruby-gradle-plugin:1.1.5'
+    }
+}
+
+
+group 'test.doc.adoc'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: "org.asciidoctor.convert"
+apply plugin: 'com.github.jruby-gradle.base'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    gems 'rubygems:asciidoctor-diagram:1.3.0'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+
+defaultTasks 'asciidoctor'
+
+asciidoctor {
+    // jrubyPrepareGems task is added by the JRuby
+    // plugin and will download Ruby gems we have
+    // defined in the gems dependency configuration.
+    dependsOn jrubyPrepare
+
+    // Asciidoctor task needs the
+    // asciidoctor-diagram gem, we installed
+    // with the jrubyPrepareGems task and
+    // gems dependency configuration.
+    requires = ['asciidoctor-diagram']
+
+    // Set path to find gems to directory
+    // used by jrubyPrepareGems task.
+    gemPath = jrubyPrepare.outputDir
+
+    // set baseDir to projectDir to enable legacy behavior (resolve includes from root of project)
+    //baseDir = projectDir
+    outputDir = file("$buildDir/docs")
+
+    sourceDir project.file('src/docs/asciidoc')
+
+    separateOutputDirs = false
+    logDocuments = true
+    backends    'html5','pdf'
+    attributes  'build-gradle': file('build.gradle'),
+                'source-highlighter': 'coderay',
+                'toc': 'right',
+                'toc-title' : 'Inhaltsverzeichnis',
+                'icons': 'font',
+                'idprefix': '',
+                'idseparator': '-',
+                'setanchors': 'true',
+                'docinfo1':'true',
+                'imagesdir': file("$buildDir/docs/images"),
+                'sourcedir':file("src/main/java")
+
+
+}
+
