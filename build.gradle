@@ -33,30 +33,29 @@ dependencies {
 defaultTasks 'asciidoctor'
 
 asciidoctor {
-    // jrubyPrepareGems task is added by the JRuby
+    // jrubyPrepare task is added by the JRuby
     // plugin and will download Ruby gems we have
     // defined in the gems dependency configuration.
     dependsOn jrubyPrepare
-
     // Asciidoctor task needs the
     // asciidoctor-diagram gem, we installed
-    // with the jrubyPrepareGems task and
+    // with the jrubyPrepare task and
     // gems dependency configuration.
     requires = ['asciidoctor-diagram']
-
     // Set path to find gems to directory
     // used by jrubyPrepareGems task.
     gemPath = jrubyPrepare.outputDir
-
-    // set baseDir to projectDir to enable legacy behavior (resolve includes from root of project)
-    //baseDir = projectDir
+    // set output direcotry
     outputDir = file("$buildDir/docs")
-
+    // source asciidoc folder
     sourceDir project.file('src/docs/asciidoc')
-
+    // don't create separate folders forgenerated files
     separateOutputDirs = false
+    // write log messages aboutdocuments being converted
     logDocuments = true
+    // output formats to generate
     backends    'html5','pdf'
+    // asciidoctor attributes
     attributes  'build-gradle': file('build.gradle'),
                 'source-highlighter': 'coderay',
                 'toc': 'right',
@@ -71,4 +70,3 @@ asciidoctor {
 
 
 }
-
