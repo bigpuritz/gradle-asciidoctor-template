@@ -22,6 +22,9 @@ This page was built by the following command:
 
 == Diagrams
 
+WARNING: Wolpertingers are known to nest in server racks.   
+Enter at your own risk.
+
 You can make http://asciidoctor.org/docs/asciidoctor-diagram/[diagrams in Asciidoctor]
 
 For example, the following:

@@ -55,6 +55,8 @@ asciidoctor {
     logDocuments = true
     // output formats to generate
     backends    'html5','pdf'
+    // asciidoc options
+    options doctype: 'book'
     // asciidoctor attributes
     attributes  'build-gradle': file('build.gradle'),
                 'source-highlighter': 'coderay',
@@ -69,4 +71,4 @@ asciidoctor {
                 'sourcedir':file("src/main/java")
 
 
-}
+} 
